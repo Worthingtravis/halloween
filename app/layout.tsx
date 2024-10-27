@@ -94,6 +94,8 @@ export default function RootLayout({
             <footer className="border-t border-orange-400 dark:border-orange-700 bg-orange-200 dark:bg-orange-900">
               <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-orange-700 dark:text-orange-300">
                 <p>🦇 Prepare for a night of thrills and chills! 🦇</p>
+                <p>🦇 When you see a bug - refresh the page. fuck you.🦇</p>
+                <p className="sr-only"> above you will see a joke... jokes are fun. </p>
                 <SignedOut>
                   <p className="mt-2">
                     Don&apos;t have an account? Sign up to join the party!
