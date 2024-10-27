@@ -6,16 +6,20 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
+  SignOutButton,
   UserButton,
 } from "@clerk/nextjs";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ThemeProvider } from "next-themes";
 import Link from "next/link";
+import {QrCodeButton, QrCodeWebsite} from "@/app/QrCodeWebsite";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -34,54 +38,70 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-orange-100 dark:bg-orange-950 text-orange-950 dark:text-orange-100`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-orange-500/80 min-h-screen flex flex-col`}
         >
-          <div className="min-h-screen flex flex-col items-center  space-y-4 justify-center p-4">
-            <main className="w-full max-w-md  space-y-4">
-              <div className="text-center mb-8">
-                <Image
-                  src="/spooky.png"
-                  alt="Halloween Party Logo"
-                  width={1000}
-                  height={1000}
-                  className="mx-auto mb-4 h-48 w-96  border-4 border-black"
-                />
-                <h1 className="text-4xl font-bold text-orange-600 dark:text-orange-300 mb-2">
-                  🎃 Halloween Party 🎃
-                </h1>
-              </div>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <header className="sticky top-0 z-50 w-full border-b border-orange-400 dark:border-orange-700 bg-orange-200/80 dark:bg-orange-900/80 backdrop-blur supports-[backdrop-filter]:bg-orange-200/60 dark:supports-[backdrop-filter]:bg-orange-900/60">
+              <div className="container flex h-14 items-center justify-between">
+                <div className="mr-4 hidden md:flex">
+                  <Link href="/" className="mr-6 flex items-center space-x-2">
+                    <span className="hidden font-bold px-2 sm:inline-block">
+                      🎃 Halloween Party
+                    </span>
+                  </Link>
 
-              <div className="bg-orange-200 dark:bg-orange-900 border border-orange-400 dark:border-orange-700 rounded-lg p-8 shadow-xl">
-                <header>
-                  <SignedOut>
-                    <SignInButton mode="modal" />
-                  </SignedOut>
-                  <SignedIn>
-                    <div className="flex gap-2 items-center !text-xl">
-                      Welcome to the party! <UserButton showName={true} />
-                    </div>
-                  </SignedIn>
-                </header>
+                </div>
+
+                <div className="flex flex-1 items-center justify-end space-x-4">
+                  <nav className="flex items-center space-x-2">
+                    <SignedOut>
+                      <SignInButton mode="modal">
+                        <Button variant="outline" size="sm">
+                          Sign In
+                        </Button>
+                      </SignInButton>
+                    </SignedOut>
+                    <SignedIn>
+                      <div className="flex items-center space-x-4">
+                        <span className="text-sm hidden sm:inline-block">
+                          Welcome to the party!
+                        </span>
+                        <UserButton afterSignOutUrl="/" />
+                        <SignOutButton>
+                          <Button variant="ghost" size="sm">
+                            Sign Out
+                          </Button>
+                        </SignOutButton>
+                      </div>
+                    </SignedIn>
+                  </nav>
+                </div>
               </div>
-              <div className="bg-orange-200 animate-pulse dark:bg-orange-900 border border-orange-400 dark:border-orange-700 rounded-lg  shadow-xl">
-                <Link
-                  href={"/vote"}
-                  className="text-orange-600 text-center flex justify-center w-full p-8 text-xl dark:text-orange-300 hover:underline"
-                >
-                  Vote for the best costume!
-                </Link>
+            </header>
+            <main className="flex-1">
+              <QrCodeButton />
+              <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {children}
               </div>
-              <footer className="mt-8 text-center text-sm text-orange-700 dark:text-orange-300">
+            </main>
+            <footer className="border-t border-orange-400 dark:border-orange-700 bg-orange-200 dark:bg-orange-900">
+              <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-orange-700 dark:text-orange-300">
                 <p>🦇 Prepare for a night of thrills and chills! 🦇</p>
                 <SignedOut>
-                  <p>Don&apos;t have an account? Sign up to join the party!</p>
+                  <p className="mt-2">
+                    Don&apos;t have an account? Sign up to join the party!
+                  </p>
                 </SignedOut>
-              </footer>
-            </main>
-            {children}
-          </div>
+              </div>
+            </footer>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
