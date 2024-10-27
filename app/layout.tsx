@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "next-themes";
 import Link from "next/link";
-import {QrCodeButton, QrCodeWebsite} from "@/app/QrCodeWebsite";
+import { QrCodeButton, QrCodeWebsite } from "@/app/QrCodeWebsite";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -56,7 +56,6 @@ export default function RootLayout({
                       🎃 Halloween Party 🎃
                     </span>
                   </Link>
-
                 </div>
 
                 <div className="flex flex-1 items-center justify-end space-x-4">
@@ -88,14 +87,30 @@ export default function RootLayout({
             <main className="flex-1">
               <QrCodeButton />
               <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                {children}
+                <SignedIn> {children}</SignedIn>
+                <SignedOut>
+                  <div className="text-center">
+                    <h1 className="text-2xl font-bold mb-4">
+                      Welcome to the Halloween Party!
+                    </h1>
+                    <p className="mb-4">
+                      Sign in to join the spookiest party of the year!
+                    </p>
+                    <SignInButton>
+                      <Button variant="outline">Sign In / Register</Button>
+                    </SignInButton>
+                  </div>
+                </SignedOut>
               </div>
             </main>
             <footer className="border-t border-orange-400 dark:border-orange-700 bg-orange-200 dark:bg-orange-900">
               <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-orange-700 dark:text-orange-300">
                 <p>🦇 Prepare for a night of thrills and chills! 🦇</p>
                 <p>🦇 When you see a bug - refresh the page. fuck you.🦇</p>
-                <p className="sr-only"> above you will see a joke... jokes are fun. </p>
+                <p className="sr-only">
+                  {" "}
+                  above you will see a joke... jokes are fun.{" "}
+                </p>
                 <SignedOut>
                   <p className="mt-2">
                     Don&apos;t have an account? Sign up to join the party!
