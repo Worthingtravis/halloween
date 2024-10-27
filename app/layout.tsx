@@ -53,7 +53,7 @@ export default function RootLayout({
                 <div className="mr-4 hidden md:flex">
                   <Link href="/" className="mr-6 flex items-center space-x-2">
                     <span className="hidden font-bold px-2 sm:inline-block">
-                      🎃 Halloween Party
+                      🎃 Halloween Party 🎃
                     </span>
                   </Link>
 
